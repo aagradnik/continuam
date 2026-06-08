@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuam — Plataforma de continuidad empresarial</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --c:   #185FA5;
+      --cl:  #E6F1FB;
+      --cm:  #378ADD;
+      --cd:  #0C447C;
+      --cdk: #042C53;
+      --bg:  #ffffff;
+      --bg2: #f7f7f5;
+      --bg3: #f0eeea;
+      --text:      #1a1a18;
+      --text2:     #5f5e5a;
+      --text3:     #888780;
+      --border:    rgba(0,0,0,0.12);
+      --border2:   rgba(0,0,0,0.22);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --c:   #378ADD;
+        --cl:  #0C447C;
+        --cm:  #85B7EB;
+        --cd:  #B5D4F4;
+        --cdk: #E6F1FB;
+        --bg:  #1c1c1a;
+        --bg2: #242422;
+        --bg3: #2c2c2a;
+        --text:   #f0eeea;
+        --text2:  #b4b2a9;
+        --text3:  #888780;
+        --border:  rgba(255,255,255,0.12);
+        --border2: rgba(255,255,255,0.22);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg3);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+      background: var(--bg);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; color: var(--text); }
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 7px;
+      background: var(--c);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a { font-size: 14px; color: var(--text2); transition: color .15s; }
+    .nav-links a:hover { color: var(--text); }
+    .btn-nav {
+      background: var(--c); color: #fff; border: none;
+      padding: 9px 20px; border-radius: var(--radius-md);
+      font-size: 14px; cursor: pointer; transition: opacity .15s;
+    }
+    .btn-nav:hover { opacity: .88; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 6rem 2.5rem 5rem;
+      text-align: center;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .pill {
+      display: inline-block;
+      background: var(--cl); color: var(--cd);
+      font-size: 12px; padding: 4px 14px;
+      border-radius: 20px; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 42px; font-weight: 500;
+      line-height: 1.2; max-width: 600px;
+      margin: 0 auto 1.25rem;
+    }
+    .hero h1 span { color: var(--c); }
+    .hero p {
+      font-size: 17px; color: var(--text2);
+      max-width: 500px; margin: 0 auto 2.25rem; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--c); color: #fff; border: none;
+      padding: 13px 30px; border-radius: var(--radius-md);
+      font-size: 15px; cursor: pointer; transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .88; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 0.5px solid var(--border2);
+      padding: 13px 30px; border-radius: var(--radius-md);
+      font-size: 15px; cursor: pointer; transition: background .15s;
+    }
+    .btn-outline:hover { background: var(--bg2); }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      background: var(--bg2);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .stat {
+      padding: 1.75rem 1.5rem; text-align: center;
+      border-right: 0.5px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-size: 26px; font-weight: 500; color: var(--c); }
+    .stat-l { font-size: 13px; color: var(--text2); margin-top: 5px; }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 4rem 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+      background: var(--bg2);
+    }
+    section.white { background: var(--bg); }
+    .section-tag {
+      display: inline-block; font-size: 12px;
+      color: var(--cd); background: var(--cl);
+      padding: 4px 13px; border-radius: 20px; margin-bottom: 1rem;
+    }
+    .section-title { font-size: 26px; font-weight: 500; margin-bottom: .6rem; }
+    .section-sub {
+      font-size: 15px; color: var(--text2);
+      line-height: 1.7; margin-bottom: 2.25rem; max-width: 540px;
+    }
+
+    /* ── AUDIENCE ── */
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .aud-card {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem; background: var(--bg);
+    }
+    .aud-icon { font-size: 24px; margin-bottom: 14px; color: var(--c); }
+    .aud-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 10px; }
+    .aud-card > p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+    .aud-card ul { margin-top: 14px; padding: 0; list-style: none; }
+    .aud-card ul li {
+      font-size: 13px; color: var(--text2);
+      padding: 5px 0; display: flex; align-items: flex-start; gap: 10px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .aud-card ul li:last-child { border-bottom: none; }
+    .aud-card ul li::before { content: "→"; color: var(--c); flex-shrink: 0; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; }
+    .step {
+      display: flex; gap: 1.75rem; padding: 1.75rem 0;
+      border-bottom: 0.5px solid var(--border); align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      min-width: 38px; height: 38px; border-radius: 50%;
+      border: 0.5px solid var(--c); color: var(--c);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 500; flex-shrink: 0;
+    }
+    .step-content h4 { font-size: 16px; font-weight: 500; margin-bottom: 5px; }
+    .step-content p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+    /* ── CASES ── */
+    .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .case-card {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem; background: var(--bg);
+    }
+    .case-type {
+      font-size: 11px; background: var(--cl); color: var(--cd);
+      padding: 3px 11px; border-radius: 20px; display: inline-block; margin-bottom: 12px;
+    }
+    .case-card h4 { font-size: 14px; font-weight: 500; margin-bottom: 7px; }
+    .case-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+    .case-meta {
+      margin-top: 14px; font-size: 12px; color: var(--text3);
+      display: flex; gap: 14px; padding-top: 10px;
+      border-top: 0.5px solid var(--border);
+    }
+    .case-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* ── TRUST ── */
+    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .trust-card {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem; background: var(--bg); text-align: center;
+    }
+    .trust-icon { font-size: 24px; color: var(--c); margin-bottom: 12px; }
+    .trust-card h4 { font-size: 15px; font-weight: 500; margin-bottom: 7px; }
+    .trust-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+    /* ── FORM ── */
+    .form-section { background: var(--bg2); }
+    .form-tabs {
+      display: flex; margin-bottom: 2rem;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); overflow: hidden; width: fit-content;
+    }
+    .tab {
+      padding: 9px 22px; font-size: 14px; cursor: pointer;
+      background: transparent; border: none; color: var(--text2);
+      transition: all .15s;
+    }
+    .tab.active { background: var(--c); color: #fff; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 13px; color: var(--text2); }
+    input, select, textarea {
+      font-size: 14px; padding: 10px 13px;
+      border-radius: var(--radius-md);
+      border: 0.5px solid var(--border);
+      background: var(--bg); color: var(--text); width: 100%;
+      transition: border-color .15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--c);
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    .btn-submit {
+      background: var(--c); color: #fff; border: none;
+      padding: 13px 36px; border-radius: var(--radius-md);
+      font-size: 15px; cursor: pointer; margin-top: 10px;
+      transition: opacity .15s;
+    }
+    .btn-submit:hover { opacity: .88; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 2.5rem;
+      background: var(--bg);
+      border-top: 0.5px solid var(--border);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-logo { font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    .footer-logo-mark {
+      width: 24px; height: 24px; border-radius: 6px;
+      background: var(--c); display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-mark svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
+    footer p { font-size: 13px; color: var(--text3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .nav-links a { display: none; }
+      .hero h1 { font-size: 30px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .audience-grid, .cases-grid, .trust-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16"><path d="M3 8 L8 3 L13 8"/><path d="M8 3 L8 13"/></svg>
+    </div>
+    Continuam
+  </div>
+  <div class="nav-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#empresas">Para empresas</a>
+    <a href="#continuadores">Para continuadores</a>
+    <button class="btn-nav" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Registrarse</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:6rem 2.5rem 5rem; border-bottom:0.5px solid var(--border);">
+  <div class="pill">Plataforma de continuidad empresarial</div>
+  <h1>Lo que construiste merece <span>continuar</span></h1>
+  <p>Conectamos empresas y comercios sin sucesor con personas que quieren hacer crecer lo que alguien más construyó.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Tengo una empresa</button>
+    <button class="btn-outline" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Quiero continuar un negocio</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-n">4 de cada 10</div>
+    <div class="stat-l">PyMEs cierran por falta de sucesor</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">+15 años</div>
+    <div class="stat-l">Promedio de historia de las empresas publicadas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">0 cierres innecesarios</div>
+    <div class="stat-l">Es nuestra misión</div>
+  </div>
+</div>
+
+<!-- AUDIENCIAS -->
+<section id="empresas">
+  <div class="section-tag">¿Para quién es?</div>
+  <div class="section-title">Dos roles, una misma solución</div>
+  <div class="section-sub">Cada empresa que cierra es historia perdida. Cada emprendedor que arranca de cero pierde tiempo valioso. Continuam los une.</div>
+  <div class="audience-grid" id="continuadores">
+    <div class="aud-card">
+      <div class="aud-icon"><i class="ti ti-building-store"></i></div>
+      <h3>Empresas que buscan continuidad</h3>
+      <p>Tenés un negocio construido con años de trabajo pero no tenés herederos o no querés que simplemente cierre.</p>
+      <ul>
+        <li>Publicás con total confidencialidad</li>
+        <li>Elegís a quién transferir y en qué condiciones</li>
+        <li>Tu historia continúa, no desaparece</li>
+        <li>Posibilidad de acompañar la transición</li>
+      </ul>
+    </div>
+    <div class="aud-card">
+      <div class="aud-icon"><i class="ti ti-user-check"></i></div>
+      <h3>Continuadores que buscan oportunidades</h3>
+      <p>Querés tener tu propio negocio pero preferís uno con historia, clientes y estructura antes que arrancar de cero.</p>
+      <ul>
+        <li>Accedés a negocios reales con trayectoria</li>
+        <li>Conocés la historia antes de comprometerte</li>
+        <li>Acordás condiciones directamente con el dueño</li>
+        <li>Arrancás con base, no con incertidumbre</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PASOS -->
+<section class="white" id="como-funciona">
+  <div class="section-tag">El proceso</div>
+  <div class="section-title">Cómo funciona Continuam</div>
+  <div class="section-sub">Un proceso de cuatro pasos pensado para que la transición sea ordenada, segura y justa para ambas partes.</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Publicación o registro de interés</h4>
+        <p>El dueño publica su empresa con datos generales sin revelar identidad. El continuador completa un perfil con sus intereses, experiencia y disponibilidad.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Matching por compatibilidad</h4>
+        <p>Continuam sugiere perfiles compatibles según rubro, zona y condiciones. Ambas partes pueden expresar interés para iniciar un diálogo anónimo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Conocerse y evaluar</h4>
+        <p>Con interés mutuo confirmado, se comparten datos de contacto. Facilitamos un protocolo de due diligence básico para ambas partes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Acuerdo y transición</h4>
+        <p>Las partes acuerdan la modalidad — donación, venta simbólica, sociedad — con asesoramiento legal optativo. El negocio continúa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASOS -->
+<section>
+  <div class="section-tag">Casos de uso</div>
+  <div class="section-title">Qué tipo de negocios pueden publicarse</div>
+  <div class="section-sub">Cualquier negocio con historia y clientela establecida merece la oportunidad de seguir adelante.</div>
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-type">Gastronomía</div>
+      <h4>Bar o restaurante familiar</h4>
+      <p>Local con clientela fiel, recetas propias y años de barrio. El dueño quiere retirarse sin cerrar.</p>
+      <div class="case-meta">
+        <span><i class="ti ti-map-pin" style="font-size:13px"></i> CABA / GBA</span>
+        <span><i class="ti ti-clock" style="font-size:13px"></i> +20 años</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type">Servicios</div>
+      <h4>Taller mecánico o técnico</h4>
+      <p>Cartera de clientes consolidada, herramientas propias y reputación construida en el tiempo.</p>
+      <div class="case-meta">
+        <span><i class="ti ti-map-pin" style="font-size:13px"></i> Interior</span>
+        <span><i class="ti ti-clock" style="font-size:13px"></i> +15 años</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type">Comercio</div>
+      <h4>Librería o casa de artículos</h4>
+      <p>Negocio de barrio reconocido, proveedores establecidos y comunidad de clientes habitual.</p>
+      <div class="case-meta">
+        <span><i class="ti ti-map-pin" style="font-size:13px"></i> Todo el país</span>
+        <span><i class="ti ti-clock" style="font-size:13px"></i> +10 años</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIANZA -->
+<section class="white">
+  <div class="section-tag">Por qué Continuam</div>
+  <div class="section-title">Un proceso confiable para una decisión importante</div>
+  <div class="section-sub">Ceder o tomar un negocio es una decisión de vida. Diseñamos cada paso para que sea segura.</div>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon"><i class="ti ti-lock"></i></div>
+      <h4>Confidencialidad total</h4>
+      <p>La identidad de ambas partes se protege hasta que haya interés mutuo confirmado.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><i class="ti ti-checks"></i></div>
+      <h4>Perfiles verificados</h4>
+      <p>Validamos la existencia y trayectoria de las empresas antes de publicarlas.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><i class="ti ti-scale"></i></div>
+      <h4>Asesoramiento legal optativo</h4>
+      <p>Acceso a profesionales especializados en transferencia y sucesión empresarial.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULARIO -->
+<section class="form-section" id="registro">
+  <div class="section-tag">Sumate</div>
+  <div class="section-title">¿Querés ser parte de Continuam?</div>
+  <div class="section-sub">Completá el formulario según tu perfil. Te contactamos para coordinar los próximos pasos.</div>
+  <div class="form-tabs">
+    <button class="tab active" id="tab-e" onclick="setTab('e')">Tengo una empresa</button>
+    <button class="tab" id="tab-c" onclick="setTab('c')">Quiero continuar</button>
+  </div>
+  <div class="form-grid" id="form-fields">
+    <div class="form-group"><label>Nombre / Razón social</label><input type="text" placeholder="Ej: Ferretería López" /></div>
+    <div class="form-group"><label>Rubro</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Otro</option></select></div>
+    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Buenos Aires" /></div>
+    <div class="form-group"><label>Años de actividad</label><input type="number" placeholder="Ej: 25" /></div>
+    <div class="form-group full"><label>Contanos brevemente la historia de tu empresa</label><textarea placeholder="¿Cuándo la fundaste? ¿Qué la hace especial? ¿Por qué querés que continúe?"></textarea></div>
+    <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
+    <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>
+  </div>
+  <button class="btn-submit">Enviar información</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-mark">
+      <svg viewBox="0 0 16 16"><path d="M3 8 L8 3 L13 8"/><path d="M8 3 L8 13"/></svg>
+    </div>
+    Continuam
+  </div>
+  <p>continuam.com.ar · Buenos Aires, Argentina</p>
+  <p>Plataforma de continuidad empresarial</p>
+</footer>
+
+<script>
+  function setTab(t) {
+    document.getElementById('tab-e').classList.toggle('active', t === 'e');
+    document.getElementById('tab-c').classList.toggle('active', t === 'c');
+    const f = document.getElementById('form-fields');
+    if (t === 'c') {
+      f.innerHTML = `
+        <div class="form-group"><label>Tu nombre completo</label><input type="text" placeholder="Ej: Martín García" /></div>
+        <div class="form-group"><label>Rubro de interés</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Cualquiera</option></select></div>
+        <div class="form-group"><label>Provincia preferida</label><input type="text" placeholder="Ej: Córdoba" /></div>
+        <div class="form-group"><label>Experiencia previa</label><select><option>Sin experiencia en el rubro</option><option>Algo de experiencia</option><option>Soy del rubro</option></select></div>
+        <div class="form-group full"><label>¿Por qué querés continuar un legado en lugar de arrancar de cero?</label><textarea placeholder="Contanos tu situación y motivación..."></textarea></div>
+        <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
+        <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>`;
+    } else {
+      f.innerHTML = `
+        <div class="form-group"><label>Nombre / Razón social</label><input type="text" placeholder="Ej: Ferretería López" /></div>
+        <div class="form-group"><label>Rubro</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Otro</option></select></div>
+        <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Buenos Aires" /></div>
+        <div class="form-group"><label>Años de actividad</label><input type="number" placeholder="Ej: 25" /></div>
+        <div class="form-group full"><label>Contanos brevemente la historia de tu empresa</label><textarea placeholder="¿Cuándo la fundaste? ¿Qué la hace especial? ¿Por qué querés que continúe?"></textarea></div>
+        <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
+        <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>`;
+    }
+  }
+</script>
+
+</body>
+</html>
