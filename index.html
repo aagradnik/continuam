@@ -1,709 +1,539 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Continuam — Plataforma de continuidad empresarial</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --c:   #185FA5;
-      --cl:  #E6F1FB;
-      --cm:  #378ADD;
-      --cd:  #0C447C;
-      --cdk: #042C53;
-      --bg:  #ffffff;
-      --bg2: #f7f7f5;
-      --bg3: #f0eeea;
-      --text:      #1a1a18;
-      --text2:     #5f5e5a;
-      --text3:     #888780;
-      --border:    rgba(0,0,0,0.12);
-      --border2:   rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --c:   #378ADD;
-        --cl:  #0C447C;
-        --cm:  #85B7EB;
-        --cd:  #B5D4F4;
-        --cdk: #E6F1FB;
-        --bg:  #1c1c1a;
-        --bg2: #242422;
-        --bg3: #2c2c2a;
-        --text:   #f0eeea;
-        --text2:  #b4b2a9;
-        --text3:  #888780;
-        --border:  rgba(255,255,255,0.12);
-        --border2: rgba(255,255,255,0.22);
-      }
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--text);
-      background: var(--bg3);
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    /* ── NAV ── */
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2.5rem;
-      border-bottom: 0.5px solid var(--border);
-      background: var(--bg);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .logo { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; color: var(--text); }
-    .logo-mark {
-      width: 30px; height: 30px; border-radius: 7px;
-      background: var(--c);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .logo-mark svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a { font-size: 14px; color: var(--text2); transition: color .15s; }
-    .nav-links a:hover { color: var(--text); }
-    .btn-nav {
-      background: var(--c); color: #fff; border: none;
-      padding: 9px 20px; border-radius: var(--radius-md);
-      font-size: 14px; cursor: pointer; transition: opacity .15s;
-    }
-    .btn-nav:hover { opacity: .88; }
-
-    /* ── HERO ── */
-    .hero {
-      padding: 6rem 2.5rem 5rem;
-      text-align: center;
-      background: var(--bg);
-      border-bottom: 0.5px solid var(--border);
-    }
-    .pill {
-      display: inline-block;
-      background: var(--cl); color: var(--cd);
-      font-size: 12px; padding: 4px 14px;
-      border-radius: 20px; margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-size: 42px; font-weight: 500;
-      line-height: 1.2; max-width: 600px;
-      margin: 0 auto 1.25rem;
-    }
-    .hero h1 span { color: var(--c); }
-    .hero p {
-      font-size: 17px; color: var(--text2);
-      max-width: 500px; margin: 0 auto 2.25rem; line-height: 1.7;
-    }
-    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--c); color: #fff; border: none;
-      padding: 13px 30px; border-radius: var(--radius-md);
-      font-size: 15px; cursor: pointer; transition: opacity .15s;
-    }
-    .btn-primary:hover { opacity: .88; }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 0.5px solid var(--border2);
-      padding: 13px 30px; border-radius: var(--radius-md);
-      font-size: 15px; cursor: pointer; transition: background .15s;
-    }
-    .btn-outline:hover { background: var(--bg2); }
-
-    /* ── STATS ── */
-    .stats {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      background: var(--bg2);
-      border-bottom: 0.5px solid var(--border);
-    }
-    .stat {
-      padding: 1.75rem 1.5rem; text-align: center;
-      border-right: 0.5px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-n { font-size: 26px; font-weight: 500; color: var(--c); }
-    .stat-l { font-size: 13px; color: var(--text2); margin-top: 5px; }
-
-    /* ── SECTIONS ── */
-    section {
-      padding: 4rem 2.5rem;
-      border-bottom: 0.5px solid var(--border);
-      background: var(--bg2);
-    }
-    section.white { background: var(--bg); }
-    .section-tag {
-      display: inline-block; font-size: 12px;
-      color: var(--cd); background: var(--cl);
-      padding: 4px 13px; border-radius: 20px; margin-bottom: 1rem;
-    }
-    .section-title { font-size: 26px; font-weight: 500; margin-bottom: .6rem; }
-    .section-sub {
-      font-size: 15px; color: var(--text2);
-      line-height: 1.7; margin-bottom: 2.25rem; max-width: 540px;
-    }
-
-    /* ── AUDIENCE ── */
-    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .aud-card {
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem; background: var(--bg);
-    }
-    .aud-icon { font-size: 24px; margin-bottom: 14px; color: var(--c); }
-    .aud-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 10px; }
-    .aud-card > p { font-size: 14px; color: var(--text2); line-height: 1.6; }
-    .aud-card ul { margin-top: 14px; padding: 0; list-style: none; }
-    .aud-card ul li {
-      font-size: 13px; color: var(--text2);
-      padding: 5px 0; display: flex; align-items: flex-start; gap: 10px;
-      border-bottom: 0.5px solid var(--border);
-    }
-    .aud-card ul li:last-child { border-bottom: none; }
-    .aud-card ul li::before { content: "→"; color: var(--c); flex-shrink: 0; }
-
-    /* ── STEPS ── */
-    .steps { display: flex; flex-direction: column; }
-    .step {
-      display: flex; gap: 1.75rem; padding: 1.75rem 0;
-      border-bottom: 0.5px solid var(--border); align-items: flex-start;
-    }
-    .step:last-child { border-bottom: none; }
-    .step-num {
-      min-width: 38px; height: 38px; border-radius: 50%;
-      border: 0.5px solid var(--c); color: var(--c);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 500; flex-shrink: 0;
-    }
-    .step-content h4 { font-size: 16px; font-weight: 500; margin-bottom: 5px; }
-    .step-content p { font-size: 14px; color: var(--text2); line-height: 1.6; }
-
-    /* ── CASES ── */
-    .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .case-card {
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem; background: var(--bg);
-    }
-    .case-type {
-      font-size: 11px; background: var(--cl); color: var(--cd);
-      padding: 3px 11px; border-radius: 20px; display: inline-block; margin-bottom: 12px;
-    }
-    .case-card h4 { font-size: 14px; font-weight: 500; margin-bottom: 7px; }
-    .case-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
-    .case-meta {
-      margin-top: 14px; font-size: 12px; color: var(--text3);
-      display: flex; gap: 14px; padding-top: 10px;
-      border-top: 0.5px solid var(--border);
-    }
-    .case-meta span { display: flex; align-items: center; gap: 4px; }
-
-    /* ── TRUST ── */
-    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .trust-card {
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem; background: var(--bg); text-align: center;
-    }
-    .trust-icon { font-size: 24px; color: var(--c); margin-bottom: 12px; }
-    .trust-card h4 { font-size: 15px; font-weight: 500; margin-bottom: 7px; }
-    .trust-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
-
-    /* ── FORM ── */
-    .form-section { background: var(--bg2); }
-    .form-tabs {
-      display: flex; margin-bottom: 2rem;
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-md); overflow: hidden; width: fit-content;
-    }
-    .tab {
-      padding: 9px 22px; font-size: 14px; cursor: pointer;
-      background: transparent; border: none; color: var(--text2);
-      transition: all .15s;
-    }
-    .tab.active { background: var(--c); color: #fff; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full { grid-column: 1 / -1; }
-    label { font-size: 13px; color: var(--text2); }
-    input, select, textarea {
-      font-size: 14px; padding: 10px 13px;
-      border-radius: var(--radius-md);
-      border: 0.5px solid var(--border);
-      background: var(--bg); color: var(--text); width: 100%;
-      transition: border-color .15s;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none; border-color: var(--c);
-    }
-    textarea { min-height: 90px; resize: vertical; }
-    .btn-submit {
-      background: var(--c); color: #fff; border: none;
-      padding: 13px 36px; border-radius: var(--radius-md);
-      font-size: 15px; cursor: pointer; margin-top: 10px;
-      transition: opacity .15s;
-    }
-    .btn-submit:hover { opacity: .88; }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 2rem 2.5rem;
-      background: var(--bg);
-      border-top: 0.5px solid var(--border);
-      display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: wrap; gap: 12px;
-    }
-    .footer-logo { font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-    .footer-logo-mark {
-      width: 24px; height: 24px; border-radius: 6px;
-      background: var(--c); display: flex; align-items: center; justify-content: center;
-    }
-    .footer-logo-mark svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
-    footer p { font-size: 13px; color: var(--text3); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 680px) {
-      .nav-links a { display: none; }
-      .hero h1 { font-size: 30px; }
-      .stats { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 0.5px solid var(--border); }
-      .stat:last-child { border-bottom: none; }
-      .audience-grid, .cases-grid, .trust-grid { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: 1; }
-      footer { flex-direction: column; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Continuam — Lo que construiste merece continuar</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.17.0/dist/tabler-icons.min.css" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --c:#185FA5;--c-lt:#E6F1FB;--c-md:#378ADD;--c-dk:#0C447C;--c-dkr:#042C53;
+    --teal:#1D9E75;--teal-lt:#E1F5EE;--teal-dk:#0F6E56;
+    --ink:#0f1117;--ink-2:#161920;--ink-3:#1a1d26;--ink-bd:#2a2e3a;
+    --bg:#fff;--bg-2:#F7F6F2;--bg-3:#EFEDE6;
+    --text:#16181d;--text-2:#5a5e68;--text-3:#8b8f99;
+    --border:rgba(15,17,23,0.10);--border-2:rgba(15,17,23,0.18);
+    --fd:"Fraunces",Georgia,serif;--fs:"Inter",-apple-system,sans-serif;
+    --r:14px;--rs:10px;--mw:1140px;
+  }
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+  body{font-family:var(--fs);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;}
+  a{text-decoration:none;color:inherit;}
+  ::selection{background:var(--c-lt);color:var(--c-dk);}
+  .wrap{max-width:var(--mw);margin:0 auto;padding:0 2rem;}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}html{scroll-behavior:auto;}}
+</style>
 </head>
 <body>
+<div id="root"></div>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 16 16"><path d="M3 8 L8 3 L13 8"/><path d="M8 3 L8 13"/></svg>
-    </div>
-    Continuam
-  </div>
-  <div class="nav-links">
-    <a href="#como-funciona">Cómo funciona</a>
-    <a href="#empresas">Para empresas</a>
-    <a href="#continuadores">Para continuadores</a>
-    <button class="btn-nav" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Registrarse</button>
-  </div>
-</nav>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/framer-motion@11.3.8/dist/framer-motion.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- HERO -->
-<section class="hero" style="padding:6rem 2.5rem 5rem; border-bottom:0.5px solid var(--border);">
-  <div class="pill">Plataforma de continuidad empresarial</div>
-  <h1>Lo que construiste merece <span>continuar</span></h1>
-  <p>Conectamos empresas y comercios sin sucesor con personas que quieren hacer crecer lo que alguien más construyó.</p>
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Tengo una empresa</button>
-    <button class="btn-outline" onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Quiero continuar un negocio</button>
-  </div>
-</section>
+<script type="text/babel" data-presets="react">
+const FM = window.Motion || window.FramerMotion || {};
+const { motion, AnimatePresence, useScroll, useTransform, useInView, useMotionValue, animate, useSpring } = FM;
+const { useState, useEffect, useRef } = React;
+const ease = [0.22, 1, 0.36, 1];
 
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <div class="stat-n">4 de cada 10</div>
-    <div class="stat-l">PyMEs cierran por falta de sucesor</div>
-  </div>
-  <div class="stat">
-    <div class="stat-n">+15 años</div>
-    <div class="stat-l">Promedio de historia de las empresas publicadas</div>
-  </div>
-  <div class="stat">
-    <div class="stat-n">0 cierres innecesarios</div>
-    <div class="stat-l">Es nuestra misión</div>
-  </div>
-</div>
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, ease, delay: i * 0.08 } })
+};
 
-<!-- AUDIENCIAS -->
-<section id="empresas">
-  <div class="section-tag">¿Para quién es?</div>
-  <div class="section-title">Dos roles, una misma solución</div>
-  <div class="section-sub">Cada empresa que cierra es historia perdida. Cada emprendedor que arranca de cero pierde tiempo valioso. Continuam los une.</div>
-  <div class="audience-grid" id="continuadores">
-    <div class="aud-card">
-      <div class="aud-icon"><i class="ti ti-building-store"></i></div>
-      <h3>Empresas que buscan continuidad</h3>
-      <p>Tenés un negocio construido con años de trabajo pero no tenés herederos o no querés que simplemente cierre.</p>
-      <ul>
-        <li>Publicás con total confidencialidad</li>
-        <li>Elegís a quién transferir y en qué condiciones</li>
-        <li>Tu historia continúa, no desaparece</li>
-        <li>Posibilidad de acompañar la transición</li>
-      </ul>
-    </div>
-    <div class="aud-card">
-      <div class="aud-icon"><i class="ti ti-user-check"></i></div>
-      <h3>Continuadores que buscan oportunidades</h3>
-      <p>Querés tener tu propio negocio pero preferís uno con historia, clientes y estructura antes que arrancar de cero.</p>
-      <ul>
-        <li>Accedés a negocios reales con trayectoria</li>
-        <li>Conocés la historia antes de comprometerte</li>
-        <li>Acordás condiciones directamente con el dueño</li>
-        <li>Arrancás con base, no con incertidumbre</li>
-      </ul>
-    </div>
-  </div>
-</section>
+function Reveal({ children, delay = 0, y = 28, className, style }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div ref={ref} className={className} style={style}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease, delay }}>
+      {children}
+    </motion.div>
+  );
+}
 
-<!-- PASOS -->
-<section class="white" id="como-funciona">
-  <div class="section-tag">El proceso</div>
-  <div class="section-title">Cómo funciona Continuam</div>
-  <div class="section-sub">Un proceso de cuatro pasos pensado para que la transición sea ordenada, segura y justa para ambas partes.</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h4>Publicación o registro de interés</h4>
-        <p>El dueño publica su empresa con datos generales sin revelar identidad. El continuador completa un perfil con sus intereses, experiencia y disponibilidad.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h4>Matching por compatibilidad</h4>
-        <p>Continuam sugiere perfiles compatibles según rubro, zona y condiciones. Ambas partes pueden expresar interés para iniciar un diálogo anónimo.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h4>Conocerse y evaluar</h4>
-        <p>Con interés mutuo confirmado, se comparten datos de contacto. Facilitamos un protocolo de due diligence básico para ambas partes.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <h4>Acuerdo y transición</h4>
-        <p>Las partes acuerdan la modalidad — donación, venta simbólica, sociedad — con asesoramiento legal optativo. El negocio continúa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CASOS -->
-<section>
-  <div class="section-tag">Casos de uso</div>
-  <div class="section-title">Qué tipo de negocios pueden publicarse</div>
-  <div class="section-sub">Cualquier negocio con historia y clientela establecida merece la oportunidad de seguir adelante.</div>
-  <div class="cases-grid">
-    <div class="case-card">
-      <div class="case-type">Gastronomía</div>
-      <h4>Bar o restaurante familiar</h4>
-      <p>Local con clientela fiel, recetas propias y años de barrio. El dueño quiere retirarse sin cerrar.</p>
-      <div class="case-meta">
-        <span><i class="ti ti-map-pin" style="font-size:13px"></i> CABA / GBA</span>
-        <span><i class="ti ti-clock" style="font-size:13px"></i> +20 años</span>
-      </div>
-    </div>
-    <div class="case-card">
-      <div class="case-type">Servicios</div>
-      <h4>Taller mecánico o técnico</h4>
-      <p>Cartera de clientes consolidada, herramientas propias y reputación construida en el tiempo.</p>
-      <div class="case-meta">
-        <span><i class="ti ti-map-pin" style="font-size:13px"></i> Interior</span>
-        <span><i class="ti ti-clock" style="font-size:13px"></i> +15 años</span>
-      </div>
-    </div>
-    <div class="case-card">
-      <div class="case-type">Comercio</div>
-      <h4>Librería o casa de artículos</h4>
-      <p>Negocio de barrio reconocido, proveedores establecidos y comunidad de clientes habitual.</p>
-      <div class="case-meta">
-        <span><i class="ti ti-map-pin" style="font-size:13px"></i> Todo el país</span>
-        <span><i class="ti ti-clock" style="font-size:13px"></i> +10 años</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONFIANZA -->
-<section class="white">
-  <div class="section-tag">Por qué Continuam</div>
-  <div class="section-title">Un proceso confiable para una decisión importante</div>
-  <div class="section-sub">Ceder o tomar un negocio es una decisión de vida. Diseñamos cada paso para que sea segura.</div>
-  <div class="trust-grid">
-    <div class="trust-card">
-      <div class="trust-icon"><i class="ti ti-lock"></i></div>
-      <h4>Confidencialidad total</h4>
-      <p>La identidad de ambas partes se protege hasta que haya interés mutuo confirmado.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-icon"><i class="ti ti-checks"></i></div>
-      <h4>Perfiles verificados</h4>
-      <p>Validamos la existencia y trayectoria de las empresas antes de publicarlas.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-icon"><i class="ti ti-scale"></i></div>
-      <h4>Asesoramiento legal optativo</h4>
-      <p>Acceso a profesionales especializados en transferencia y sucesión empresarial.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESO INTERACTIVO -->
-<section style="background:#0f1117;padding:4rem 2.5rem;border-bottom:0.5px solid #2a2e3a;" id="proceso">
-
-  <style>
-    .dp{display:none;} .dp.active{display:block;}
-    .sr-step{flex:1;min-width:0;cursor:pointer;padding:0 6px;}
-    .sr-step:first-child{padding-left:0;} .sr-step:last-child{padding-right:0;}
-    .sr-top{display:flex;align-items:center;}
-    .sr-circle{width:34px;height:34px;border-radius:50%;border:0.5px solid #2a2e3a;background:#1a1d26;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#888780;flex-shrink:0;transition:all .2s;cursor:pointer;}
-    .sr-circle.active{background:#185FA5;border-color:#378ADD;color:#fff;}
-    .sr-circle.done{background:#0F6E56;border-color:#1D9E75;color:#fff;}
-    .sr-line{flex:1;height:0.5px;background:#2a2e3a;margin:0 3px;transition:background .2s;}
-    .sr-line.done{background:#1D9E75;}
-    .sr-lbl{font-size:11px;color:#5F5E5A;text-align:center;margin-top:6px;padding:0 2px;transition:color .2s;}
-    .sr-lbl.active{color:#85B7EB;} .sr-lbl.done{color:#5DCAA5;}
-    .dark-panel{background:#161920;border:0.5px solid #2a2e3a;border-radius:12px;overflow:hidden;margin-bottom:1.5rem;}
-    .dark-ph{padding:1.25rem 1.5rem;border-bottom:0.5px solid #2a2e3a;display:flex;align-items:center;gap:14px;}
-    .dark-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-    .dark-ph-title{font-size:17px;font-weight:500;color:#f0eeea;margin-bottom:3px;}
-    .dark-ph-sub{font-size:13px;color:#888780;}
-    .dark-pb{padding:1.25rem 1.5rem;}
-    .dark-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-    .dark-ib{background:#1a1d26;border-radius:8px;padding:.85rem 1rem;border:0.5px solid #2a2e3a;}
-    .dark-ibl{font-size:11px;color:#5F5E5A;margin-bottom:5px;letter-spacing:.05em;}
-    .dark-ibt{font-size:13px;color:#B4B2A9;line-height:1.55;}
-    .dark-accent{background:#0e1e36;border:0.5px solid #1e3a5f;border-radius:8px;padding:.85rem 1rem;margin-bottom:12px;}
-    .dark-accent .dark-ibl{color:#378ADD;} .dark-accent .dark-ibt{color:#85B7EB;}
-    .dark-doc{background:#1a1d26;border:0.5px solid #2a2e3a;border-radius:8px;overflow:hidden;margin-bottom:12px;}
-    .dark-doc-h{padding:.6rem 1rem;background:#0e1e36;border-bottom:0.5px solid #1e3a5f;display:flex;align-items:center;gap:8px;}
-    .dark-doc-h span{font-size:12px;color:#85B7EB;font-weight:500;}
-    .dark-doc-b{padding:.85rem 1rem;}
-    .ddl{height:6px;border-radius:3px;background:#2a2e3a;margin-bottom:7px;}
-    .ddl.w80{width:80%;} .ddl.w60{width:60%;} .ddl.w90{width:90%;}
-    .ddl.dacc{background:#0e1e36;border:0.5px solid #1e3a5f;}
-    .dark-erow{display:flex;align-items:center;gap:10px;padding:.7rem 1rem;border:0.5px solid #2a2e3a;border-radius:8px;background:#1a1d26;margin-bottom:8px;}
-    .dark-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
-    .dark-efrom{font-size:12px;font-weight:500;color:#D3D1C7;}
-    .dark-esubj{font-size:12px;color:#888780;}
-    .dark-ebadge{font-size:11px;padding:2px 9px;border-radius:20px;white-space:nowrap;}
-    .dark-unlock{display:flex;align-items:center;gap:10px;padding:.85rem 1rem;border:0.5px solid #0F6E56;border-radius:8px;background:#04342C;margin-bottom:12px;}
-    .dark-unlock i{font-size:20px;color:#1D9E75;flex-shrink:0;}
-    .dark-unlock p{font-size:13px;color:#9FE1CB;line-height:1.5;}
-    .dark-fee{background:#1a1d26;border:0.5px solid #2a2e3a;border-radius:8px;padding:.85rem 1rem;margin-bottom:12px;}
-    .dark-frow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid #2a2e3a;}
-    .dark-frow:last-child{border-bottom:none;padding-top:8px;}
-    .dark-fl{font-size:13px;color:#888780;} .dark-fv{font-size:13px;font-weight:500;color:#D3D1C7;}
-    .dark-ftl{font-size:14px;font-weight:500;color:#f0eeea;} .dark-ftv{font-size:17px;font-weight:500;color:#378ADD;}
-    .dark-dbtn{padding:9px 22px;border-radius:8px;font-size:13px;cursor:pointer;}
-    .dark-dbtn-o{background:transparent;border:0.5px solid #2a2e3a;color:#D3D1C7;}
-    .dark-dbtn-o:hover{background:#1a1d26;} .dark-dbtn-o:disabled{opacity:.3;cursor:default;}
-    .dark-dbtn-m{background:#185FA5;border:0.5px solid #378ADD;color:#fff;}
-    .dark-dbtn-m:hover{background:#0C447C;} .dark-dbtn-m:disabled{opacity:.4;cursor:default;}
-    @media(max-width:600px){.dark-2col{grid-template-columns:1fr;} .sr-lbl{display:none;}}
-  </style>
-
-  <div style="display:inline-block;background:#1a2236;color:#85B7EB;font-size:12px;padding:4px 14px;border-radius:20px;margin-bottom:1.25rem;border:0.5px solid #1e3a5f;">El proceso</div>
-  <div style="font-size:28px;font-weight:500;color:#f0eeea;margin-bottom:.5rem;line-height:1.2;">De la presentación al <span style="color:#378ADD;">cierre</span></div>
-  <div style="font-size:15px;color:#888780;line-height:1.7;margin-bottom:2.5rem;max-width:520px;">Un proceso estructurado en 6 pasos para que la transferencia sea ordenada, segura y con respaldo legal para ambas partes.</div>
-
-  <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:2rem;" id="dsnav"></div>
-
-  <div id="dp-0" class="dp active">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#0e1e36;color:#378ADD;"><i class="ti ti-users"></i></div><div><div class="dark-ph-title">Registro gratuito</div><div class="dark-ph-sub">Cada parte crea su perfil sin costo ni compromiso</div></div></div>
-      <div class="dark-pb">
-        <div class="dark-2col">
-          <div class="dark-ib"><div class="dark-ibl">CEDENTE</div><div class="dark-ibt">Publica su empresa con datos generales. Sin revelar identidad ni documentación todavía.</div></div>
-          <div class="dark-ib"><div class="dark-ibl">CONTINUADOR</div><div class="dark-ibt">Completa su perfil con experiencia, rubro de interés, disponibilidad y motivación.</div></div>
-        </div>
-        <div class="dark-ib"><div class="dark-ibl">QUÉ HACE CONTINUAM</div><div class="dark-ibt">Analiza los perfiles y genera sugerencias de compatibilidad por rubro, zona y condiciones. Ambas partes exploran sin compromiso.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="dp-1" class="dp">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#0e1e36;color:#378ADD;"><i class="ti ti-heart-handshake"></i></div><div><div class="dark-ph-title">Interés mutuo confirmado</div><div class="dark-ph-sub">Ambas partes confirman que quieren avanzar</div></div></div>
-      <div class="dark-pb">
-        <div class="dark-2col">
-          <div class="dark-ib"><div class="dark-ibl">CÓMO FUNCIONA</div><div class="dark-ibt">Cada parte hace clic en "Me interesa" de forma independiente. Solo cuando los dos confirman se avanza.</div></div>
-          <div class="dark-ib"><div class="dark-ibl">HASTA ESTE MOMENTO</div><div class="dark-ibt">Ambas partes son completamente anónimas. No se comparte ningún dato de contacto personal.</div></div>
-        </div>
-        <div class="dark-accent"><div class="dark-ibl">PUNTO DE ACTIVACIÓN</div><div class="dark-ibt">Esta doble confirmación dispara automáticamente la generación de la Carta de Intención con cláusula Continuam.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="dp-2" class="dp">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#0e1e36;color:#378ADD;"><i class="ti ti-file-certificate"></i></div><div><div class="dark-ph-title">Carta de Intención</div><div class="dark-ph-sub">Continuam genera el documento con los datos ya cargados</div></div></div>
-      <div class="dark-pb">
-        <div class="dark-doc">
-          <div class="dark-doc-h"><i class="ti ti-file-text" style="font-size:14px;color:#85B7EB;"></i><span>Carta de Intención · Continuam · Doc #0042</span></div>
-          <div class="dark-doc-b"><div class="ddl w80"></div><div class="ddl w60"></div><div class="ddl w90"></div><div class="ddl w90 dacc"></div><div class="ddl w60"></div></div>
-        </div>
-        <div class="dark-2col">
-          <div class="dark-ib"><div class="dark-ibl">DATOS AUTOMÁTICOS</div><div class="dark-ibt">Nombre del negocio, rubro, antigüedad, provincia. Tomados del perfil publicado sin reescribir nada.</div></div>
-          <div class="dark-ib"><div class="dark-ibl">CLÁUSULA CLAVE</div><div class="dark-ibt">Se incluye automáticamente la cláusula de origen Continuam y el fee acordado. Es el respaldo legal del proceso.</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="dp-3" class="dp">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#0e1e36;color:#378ADD;"><i class="ti ti-writing"></i></div><div><div class="dark-ph-title">Firma electrónica</div><div class="dark-ph-sub">Cada parte recibe un link único por email</div></div></div>
-      <div class="dark-pb">
-        <div style="margin-bottom:12px;">
-          <div class="dark-erow"><div class="dark-av" style="background:#0e1e36;color:#85B7EB;">JL</div><div style="flex:1;"><div class="dark-efrom">Juan López (cedente)</div><div class="dark-esubj">Firmá tu Carta de Intención — Continuam</div></div><span class="dark-ebadge" style="background:#04342C;color:#5DCAA5;border:0.5px solid #0F6E56;"><i class="ti ti-check" style="font-size:10px;"></i> Firmado</span></div>
-          <div class="dark-erow"><div class="dark-av" style="background:#1a2e1a;color:#97C459;">MG</div><div style="flex:1;"><div class="dark-efrom">Martín García (continuador)</div><div class="dark-esubj">Firmá tu Carta de Intención — Continuam</div></div><span class="dark-ebadge" style="background:#2a1f0a;color:#EF9F27;border:0.5px solid #854F0B;">Pendiente</span></div>
-        </div>
-        <div class="dark-ib"><div class="dark-ibl">QUÉ REGISTRA LA FIRMA</div><div class="dark-ibt">Timestamp exacto, dirección IP, email verificado y token de un solo uso. Válida como firma electrónica simple bajo la legislación argentina.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="dp-4" class="dp">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#04342C;color:#1D9E75;"><i class="ti ti-lock-open"></i></div><div><div class="dark-ph-title">Desbloqueo de datos</div><div class="dark-ph-sub">Con ambas firmas, se habilita el contacto directo</div></div></div>
-      <div class="dark-pb">
-        <div class="dark-unlock"><i class="ti ti-circle-check"></i><p>Carta firmada por ambas partes. Se desbloquearon los datos de contacto y el informe completo del negocio.</p></div>
-        <div class="dark-2col">
-          <div class="dark-ib"><div class="dark-ibl">QUÉ SE DESBLOQUEA</div><div class="dark-ibt">Teléfono, email y nombre real del cedente. Informe financiero básico del negocio.</div></div>
-          <div class="dark-ib"><div class="dark-ibl">SIN FIRMA</div><div class="dark-ibt">Estos datos permanecen ocultos. La carta firmada es la llave que habilita el proceso completo.</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="dp-5" class="dp">
-    <div class="dark-panel">
-      <div class="dark-ph"><div class="dark-icon" style="background:#04342C;color:#1D9E75;"><i class="ti ti-report-money"></i></div><div><div class="dark-ph-title">Cierre y comisión</div><div class="dark-ph-sub">La transferencia se formaliza y Continuam cobra su fee</div></div></div>
-      <div class="dark-pb">
-        <div class="dark-fee">
-          <div class="dark-frow"><span class="dark-fl">Valor del negocio acordado</span><span class="dark-fv">$40.000 USD</span></div>
-          <div class="dark-frow"><span class="dark-fl">Fee Continuam (2%)</span><span class="dark-fv">$800 USD</span></div>
-          <div class="dark-frow"><span class="dark-ftl">Comisión Continuam</span><span class="dark-ftv">$800 USD</span></div>
-        </div>
-        <div class="dark-ib"><div class="dark-ibl">RESPALDO LEGAL</div><div class="dark-ibt">La Carta de Intención firmada establece el origen del match y la obligación de pago. Si alguien intenta el bypass, existe documentación legal para reclamar.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div style="display:flex;justify-content:space-between;align-items:center;">
-    <button class="dark-dbtn dark-dbtn-o" id="dp-prev" onclick="dgo(-1)" disabled>← Anterior</button>
-    <span style="font-size:12px;color:#5F5E5A;" id="dp-ctr">Paso 1 de 6</span>
-    <button class="dark-dbtn dark-dbtn-m" id="dp-next" onclick="dgo(1)">Siguiente →</button>
-  </div>
-
-</section>
-
-<script>
-(function(){
-  var labels=['Registro','Interés','Carta','Firma','Desbloqueo','Cierre'];
-  var total=6,cur=0;
-  function buildNav(){
-    var nav=document.getElementById('dsnav');
-    nav.innerHTML='';
-    labels.forEach(function(l,i){
-      var item=document.createElement('div');
-      item.className='sr-step';
-      var top=document.createElement('div');
-      top.className='sr-top';
-      var dot=document.createElement('div');
-      dot.className='sr-circle'+(i<cur?' done':i===cur?' active':'');
-      dot.textContent=i<cur?'✓':(i+1);
-      top.appendChild(dot);
-      if(i<total-1){var line=document.createElement('div');line.className='sr-line'+(i<cur?' done':'');top.appendChild(line);}
-      var lbl=document.createElement('div');
-      lbl.className='sr-lbl'+(i<cur?' done':i===cur?' active':'');
-      lbl.textContent=l;
-      item.appendChild(top);item.appendChild(lbl);
-      item.onclick=(function(idx){return function(){cur=idx;render();};})(i);
-      nav.appendChild(item);
+function Counter({ to, suffix = "", prefix = "", duration = 1.8 }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, to, {
+      duration, ease,
+      onUpdate: (v) => setVal(Math.round(v))
     });
-  }
-  function render(){
-    buildNav();
-    for(var i=0;i<total;i++) document.getElementById('dp-'+i).classList.toggle('active',i===cur);
-    document.getElementById('dp-prev').disabled=cur===0;
-    document.getElementById('dp-next').disabled=cur===total-1;
-    document.getElementById('dp-next').textContent=cur===total-1?'Proceso completo ✓':'Siguiente →';
-    document.getElementById('dp-ctr').textContent='Paso '+(cur+1)+' de '+total;
-  }
-  window.dgo=function(d){cur=Math.max(0,Math.min(total-1,cur+d));render();};
-  buildNav();
-})();
-</script>
+    return () => controls.stop();
+  }, [inView, to]);
+  return <span ref={ref}>{prefix}{val.toLocaleString("es-AR")}{suffix}</span>;
+}
 
-<!-- FORMULARIO -->
-<section class="form-section" id="registro">
-  <div class="section-tag">Sumate</div>
-  <div class="section-title">¿Querés ser parte de Continuam?</div>
-  <div class="section-sub">Completá el formulario según tu perfil. Te contactamos para coordinar los próximos pasos.</div>
-  <div class="form-tabs">
-    <button class="tab active" id="tab-e" onclick="setTab('e')">Tengo una empresa</button>
-    <button class="tab" id="tab-c" onclick="setTab('c')">Quiero continuar</button>
-  </div>
-  <div class="form-grid" id="form-fields">
-    <div class="form-group"><label>Nombre / Razón social</label><input type="text" placeholder="Ej: Ferretería López" /></div>
-    <div class="form-group"><label>Rubro</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Otro</option></select></div>
-    <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Buenos Aires" /></div>
-    <div class="form-group"><label>Años de actividad</label><input type="number" placeholder="Ej: 25" /></div>
-    <div class="form-group full"><label>Contanos brevemente la historia de tu empresa</label><textarea placeholder="¿Cuándo la fundaste? ¿Qué la hace especial? ¿Por qué querés que continúe?"></textarea></div>
-    <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
-    <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>
-  </div>
-  <button class="btn-submit">Enviar información</button>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <div class="footer-logo-mark">
-      <svg viewBox="0 0 16 16"><path d="M3 8 L8 3 L13 8"/><path d="M8 3 L8 13"/></svg>
+const Logo = ({ dark }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--fs)", fontWeight: 600, fontSize: 19, color: dark ? "#f0eeea" : "var(--text)" }}>
+    <div style={{ width: 32, height: 32, borderRadius: 8, background: "var(--c)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <svg viewBox="0 0 16 16" style={{ width: 17, height: 17, fill: "none", stroke: "#fff", strokeWidth: 2.2, strokeLinecap: "round" }}>
+        <path d="M3 8 L8 3 L13 8" /><path d="M8 3 L8 13" />
+      </svg>
     </div>
     Continuam
   </div>
-  <p>continuam.com.ar · Buenos Aires, Argentina</p>
-  <p>Plataforma de continuidad empresarial</p>
-</footer>
+);
 
-<script>
-  function setTab(t) {
-    document.getElementById('tab-e').classList.toggle('active', t === 'e');
-    document.getElementById('tab-c').classList.toggle('active', t === 'c');
-    const f = document.getElementById('form-fields');
-    if (t === 'c') {
-      f.innerHTML = `
-        <div class="form-group"><label>Tu nombre completo</label><input type="text" placeholder="Ej: Martín García" /></div>
-        <div class="form-group"><label>Rubro de interés</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Cualquiera</option></select></div>
-        <div class="form-group"><label>Provincia preferida</label><input type="text" placeholder="Ej: Córdoba" /></div>
-        <div class="form-group"><label>Experiencia previa</label><select><option>Sin experiencia en el rubro</option><option>Algo de experiencia</option><option>Soy del rubro</option></select></div>
-        <div class="form-group full"><label>¿Por qué querés continuar un legado en lugar de arrancar de cero?</label><textarea placeholder="Contanos tu situación y motivación..."></textarea></div>
-        <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
-        <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>`;
-    } else {
-      f.innerHTML = `
-        <div class="form-group"><label>Nombre / Razón social</label><input type="text" placeholder="Ej: Ferretería López" /></div>
-        <div class="form-group"><label>Rubro</label><select><option>Gastronomía</option><option>Comercio minorista</option><option>Servicios</option><option>Industria</option><option>Otro</option></select></div>
-        <div class="form-group"><label>Provincia / Ciudad</label><input type="text" placeholder="Ej: Buenos Aires" /></div>
-        <div class="form-group"><label>Años de actividad</label><input type="number" placeholder="Ej: 25" /></div>
-        <div class="form-group full"><label>Contanos brevemente la historia de tu empresa</label><textarea placeholder="¿Cuándo la fundaste? ¿Qué la hace especial? ¿Por qué querés que continúe?"></textarea></div>
-        <div class="form-group"><label>Email de contacto</label><input type="email" placeholder="nombre@email.com" /></div>
-        <div class="form-group"><label>Teléfono (opcional)</label><input type="tel" placeholder="+54 11..." /></div>`;
-    }
-  }
+function Nav() {
+  const { scrollY } = useScroll();
+  const [solid, setSolid] = useState(false);
+  useEffect(() => scrollY.on("change", v => setSolid(v > 40)), [scrollY]);
+  return (
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease }}
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        background: solid ? "rgba(255,255,255,0.85)" : "transparent",
+        backdropFilter: solid ? "blur(14px)" : "none",
+        borderBottom: solid ? "0.5px solid var(--border)" : "0.5px solid transparent",
+        transition: "all .35s ease"
+      }}>
+      <div className="wrap" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 70 }}>
+        <Logo />
+        <div style={{ display: "flex", gap: 28, alignItems: "center" }} className="nav-links">
+          <a href="#como" style={{ fontSize: 14, color: "var(--text-2)" }}>Cómo funciona</a>
+          <a href="#proceso" style={{ fontSize: 14, color: "var(--text-2)" }}>El proceso</a>
+          <a href="#confianza" style={{ fontSize: 14, color: "var(--text-2)" }}>Por qué Continuam</a>
+          <motion.a href="#registro" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+            style={{ background: "var(--c)", color: "#fff", padding: "9px 20px", borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
+            Registrarse
+          </motion.a>
+        </div>
+      </div>
+    </motion.nav>
+  );
+}
+
+function Hero() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const words = ["Lo", "que", "construiste"];
+  return (
+    <section ref={ref} style={{ position: "relative", paddingTop: 180, paddingBottom: 120, overflow: "hidden" }}>
+      <motion.div style={{
+        position: "absolute", top: -200, right: -200, width: 700, height: 700, borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(24,95,165,0.10), transparent 65%)", y: y1, pointerEvents: "none"
+      }} />
+      <motion.div style={{
+        position: "absolute", bottom: -150, left: -150, width: 500, height: 500, borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(29,158,117,0.08), transparent 65%)", pointerEvents: "none"
+      }} />
+      <motion.div className="wrap" style={{ position: "relative", textAlign: "center", opacity }}>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--c-lt)", color: "var(--c-dk)", fontSize: 13, padding: "6px 16px", borderRadius: 30, marginBottom: 32, fontWeight: 500 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--teal)" }} />
+          Plataforma de continuidad empresarial
+        </motion.div>
+        <h1 style={{ fontFamily: "var(--fd)", fontWeight: 500, fontSize: "clamp(38px, 6vw, 68px)", lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: 24 }}>
+          {words.map((w, i) => (
+            <motion.span key={i} style={{ display: "inline-block", marginRight: "0.25em" }}
+              initial={{ opacity: 0, y: 40, rotate: 3 }} animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ duration: 0.8, ease, delay: 0.15 + i * 0.1 }}>
+              {w}
+            </motion.span>
+          ))}
+          <br />
+          <motion.span style={{ display: "inline-block", fontStyle: "italic", color: "var(--c)" }}
+            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease, delay: 0.5 }}>
+            merece continuar
+          </motion.span>
+        </h1>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.7 }}
+          style={{ fontSize: 19, color: "var(--text-2)", maxWidth: 540, margin: "0 auto 40px", lineHeight: 1.7 }}>
+          Conectamos empresas y comercios sin sucesor con personas que quieren hacer crecer lo que alguien más construyó.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.85, ease }}
+          style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <motion.a href="#registro" whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}
+            style={{ background: "var(--c)", color: "#fff", padding: "15px 34px", borderRadius: 12, fontSize: 16, fontWeight: 500, boxShadow: "0 10px 30px -8px rgba(24,95,165,0.5)" }}>
+            Tengo una empresa
+          </motion.a>
+          <motion.a href="#registro" whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}
+            style={{ background: "var(--bg)", color: "var(--text)", padding: "15px 34px", borderRadius: 12, fontSize: 16, fontWeight: 500, border: "0.5px solid var(--border-2)" }}>
+            Quiero continuar un negocio
+          </motion.a>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function Stats() {
+  const data = [
+    { n: 40, suf: "%", l: "de las PyMEs cierran por falta de sucesor" },
+    { n: 15, suf: "+", l: "años de historia promedio en la plataforma" },
+    { n: 0, suf: "", l: "cierres innecesarios — es nuestra misión" }
+  ];
+  return (
+    <section style={{ background: "var(--ink)", padding: "0" }}>
+      <div className="wrap" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)" }}>
+        {data.map((s, i) => (
+          <Reveal key={i} delay={i * 0.12}>
+            <div style={{ padding: "56px 24px", textAlign: "center", borderLeft: i ? "0.5px solid var(--ink-bd)" : "none" }}>
+              <div style={{ fontFamily: "var(--fd)", fontSize: 52, fontWeight: 500, color: "#fff", letterSpacing: "-0.02em" }}>
+                <Counter to={s.n} suffix={s.suf} />
+              </div>
+              <div style={{ fontSize: 14, color: "#8b8f99", marginTop: 10, maxWidth: 220, marginInline: "auto" }}>{s.l}</div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SectionTag({ children, dark }) {
+  return (
+    <div style={{ display: "inline-block", fontSize: 13, color: dark ? "#85B7EB" : "var(--c-dk)", background: dark ? "#1a2236" : "var(--c-lt)", padding: "5px 14px", borderRadius: 30, marginBottom: 18, fontWeight: 500, border: dark ? "0.5px solid #1e3a5f" : "none" }}>
+      {children}
+    </div>
+  );
+}
+
+function Audiences() {
+  const cards = [
+    { icon: "ti-building-store", h: "Empresas que buscan continuidad", p: "Tenés un negocio construido con años de trabajo pero no tenés herederos o no querés que simplemente cierre.", items: ["Publicás con total confidencialidad", "Elegís a quién transferir y en qué condiciones", "Tu historia continúa, no desaparece", "Posibilidad de acompañar la transición"] },
+    { icon: "ti-user-check", h: "Continuadores que buscan oportunidades", p: "Querés tu propio negocio pero preferís uno con historia, clientes y estructura antes que arrancar de cero.", items: ["Accedés a negocios reales con trayectoria", "Conocés la historia antes de comprometerte", "Acordás condiciones directamente con el dueño", "Arrancás con base, no con incertidumbre"] }
+  ];
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bg)" }} id="empresas">
+      <div className="wrap">
+        <Reveal><SectionTag>¿Para quién es?</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 12 }}>Dos roles, una misma solución</h2></Reveal>
+        <Reveal delay={0.1}><p style={{ fontSize: 17, color: "var(--text-2)", maxWidth: 560, marginBottom: 48 }}>Cada empresa que cierra es historia perdida. Cada emprendedor que arranca de cero pierde tiempo valioso. Continuam los une.</p></Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 20 }}>
+          {cards.map((c, i) => (
+            <Reveal key={i} delay={i * 0.12}>
+              <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.3, ease }}
+                style={{ border: "0.5px solid var(--border)", borderRadius: 18, padding: 36, background: "var(--bg)", height: "100%", boxShadow: "0 1px 0 rgba(0,0,0,0.02)" }}>
+                <div style={{ width: 52, height: 52, borderRadius: 13, background: "var(--c-lt)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22 }}>
+                  <i className={"ti " + c.icon} style={{ fontSize: 26, color: "var(--c)" }} />
+                </div>
+                <h3 style={{ fontSize: 21, fontWeight: 600, marginBottom: 12, fontFamily: "var(--fd)" }}>{c.h}</h3>
+                <p style={{ fontSize: 15, color: "var(--text-2)", marginBottom: 20, lineHeight: 1.65 }}>{c.p}</p>
+                <div>
+                  {c.items.map((it, j) => (
+                    <div key={j} style={{ display: "flex", gap: 11, padding: "9px 0", borderTop: "0.5px solid var(--border)", fontSize: 14, color: "var(--text-2)" }}>
+                      <i className="ti ti-arrow-right" style={{ color: "var(--c)", flexShrink: 0, marginTop: 3 }} />{it}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HowItWorks() {
+  const steps = [
+    { n: "01", h: "Publicación o registro", p: "El dueño publica su empresa sin revelar identidad. El continuador completa su perfil con intereses y experiencia." },
+    { n: "02", h: "Matching por compatibilidad", p: "Continuam sugiere perfiles compatibles por rubro, zona y condiciones. Ambas partes expresan interés de forma anónima." },
+    { n: "03", h: "Conocerse y evaluar", p: "Con interés mutuo, se comparten datos de contacto y un protocolo de due diligence para ambas partes." },
+    { n: "04", h: "Acuerdo y transición", p: "Las partes acuerdan la modalidad con asesoramiento legal optativo. El negocio continúa." }
+  ];
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bg-2)" }} id="como">
+      <div className="wrap">
+        <Reveal><SectionTag>El proceso</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 48 }}>Cómo funciona Continuam</h2></Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 4 }}>
+          {steps.map((s, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <div style={{ padding: 28, position: "relative" }}>
+                <div style={{ fontFamily: "var(--fd)", fontSize: 44, fontWeight: 500, color: "var(--c)", opacity: 0.25, marginBottom: 14 }}>{s.n}</div>
+                <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>{s.h}</h3>
+                <p style={{ fontSize: 14, color: "var(--text-2)", lineHeight: 1.6 }}>{s.p}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Cases() {
+  const cases = [
+    { tag: "Gastronomía", h: "Bar o restaurante familiar", p: "Local con clientela fiel, recetas propias y años de barrio. El dueño quiere retirarse sin cerrar.", loc: "CABA / GBA", yr: "+20 años" },
+    { tag: "Servicios", h: "Taller mecánico o técnico", p: "Cartera de clientes consolidada, herramientas propias y reputación construida en el tiempo.", loc: "Interior", yr: "+15 años" },
+    { tag: "Comercio", h: "Librería o casa de artículos", p: "Negocio de barrio reconocido, proveedores establecidos y comunidad de clientes habitual.", loc: "Todo el país", yr: "+10 años" }
+  ];
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bg)" }}>
+      <div className="wrap">
+        <Reveal><SectionTag>Casos de uso</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 12 }}>Qué negocios pueden publicarse</h2></Reveal>
+        <Reveal delay={0.1}><p style={{ fontSize: 17, color: "var(--text-2)", maxWidth: 560, marginBottom: 48 }}>Cualquier negocio con historia y clientela establecida merece la oportunidad de seguir adelante.</p></Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 18 }}>
+          {cases.map((c, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.3, ease }}
+                style={{ border: "0.5px solid var(--border)", borderRadius: 16, padding: 28, background: "var(--bg)", height: "100%" }}>
+                <span style={{ fontSize: 12, background: "var(--c-lt)", color: "var(--c-dk)", padding: "4px 12px", borderRadius: 30, fontWeight: 500 }}>{c.tag}</span>
+                <h3 style={{ fontSize: 18, fontWeight: 600, margin: "16px 0 8px" }}>{c.h}</h3>
+                <p style={{ fontSize: 14, color: "var(--text-2)", lineHeight: 1.6 }}>{c.p}</p>
+                <div style={{ display: "flex", gap: 16, marginTop: 18, paddingTop: 14, borderTop: "0.5px solid var(--border)", fontSize: 13, color: "var(--text-3)" }}>
+                  <span><i className="ti ti-map-pin" style={{ fontSize: 14, verticalAlign: -2 }} /> {c.loc}</span>
+                  <span><i className="ti ti-clock" style={{ fontSize: 14, verticalAlign: -2 }} /> {c.yr}</span>
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Trust() {
+  const items = [
+    { icon: "ti-lock", h: "Confidencialidad total", p: "La identidad de ambas partes se protege hasta que haya interés mutuo confirmado." },
+    { icon: "ti-checks", h: "Perfiles verificados", p: "Validamos la existencia y trayectoria de las empresas antes de publicarlas." },
+    { icon: "ti-scale", h: "Asesoramiento legal", p: "Acceso a profesionales especializados en transferencia y sucesión empresarial." }
+  ];
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bg-2)" }} id="confianza">
+      <div className="wrap">
+        <Reveal><SectionTag>Por qué Continuam</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 12 }}>Un proceso confiable para una decisión importante</h2></Reveal>
+        <Reveal delay={0.1}><p style={{ fontSize: 17, color: "var(--text-2)", maxWidth: 560, marginBottom: 48 }}>Ceder o tomar un negocio es una decisión de vida. Diseñamos cada paso para que sea segura.</p></Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
+          {items.map((it, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.3, ease }}
+                style={{ border: "0.5px solid var(--border)", borderRadius: 16, padding: 32, background: "var(--bg)", textAlign: "center", height: "100%" }}>
+                <div style={{ width: 56, height: 56, borderRadius: 14, background: "var(--teal-lt)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px" }}>
+                  <i className={"ti " + it.icon} style={{ fontSize: 26, color: "var(--teal)" }} />
+                </div>
+                <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>{it.h}</h3>
+                <p style={{ fontSize: 14, color: "var(--text-2)", lineHeight: 1.6 }}>{it.p}</p>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const PROC = [
+  { icon: "ti-users", tone: "blue", h: "Registro gratuito", sub: "Cada parte crea su perfil sin costo ni compromiso",
+    body: <div><div className="p2"><div className="pib"><div className="pibl">CEDENTE</div><div className="pibt">Publica su empresa con datos generales. Sin revelar identidad ni documentación todavía.</div></div><div className="pib"><div className="pibl">CONTINUADOR</div><div className="pibt">Completa su perfil con experiencia, rubro de interés, disponibilidad y motivación.</div></div></div><div className="pib"><div className="pibl">QUÉ HACE CONTINUAM</div><div className="pibt">Analiza los perfiles y genera sugerencias de compatibilidad por rubro, zona y condiciones.</div></div></div> },
+  { icon: "ti-heart-handshake", tone: "blue", h: "Interés mutuo confirmado", sub: "Ambas partes confirman que quieren avanzar",
+    body: <div><div className="p2"><div className="pib"><div className="pibl">CÓMO FUNCIONA</div><div className="pibt">Cada parte hace clic en "Me interesa" de forma independiente. Solo cuando los dos confirman se avanza.</div></div><div className="pib"><div className="pibl">HASTA ESTE MOMENTO</div><div className="pibt">Ambas partes son anónimas. No se comparte ningún dato de contacto personal.</div></div></div><div className="pacc"><div className="pibl" style={{color:"#378ADD"}}>PUNTO DE ACTIVACIÓN</div><div className="pibt" style={{color:"#85B7EB"}}>Esta doble confirmación dispara la generación de la Carta de Intención con cláusula Continuam.</div></div></div> },
+  { icon: "ti-file-certificate", tone: "blue", h: "Carta de Intención", sub: "Continuam genera el documento con los datos ya cargados",
+    body: <div><div className="pdoc"><div className="pdoch"><i className="ti ti-file-text" style={{fontSize:14,color:"#85B7EB"}}/><span>Carta de Intención · Continuam · Doc #0042</span></div><div className="pdocb"><div className="pdl w80"/><div className="pdl w60"/><div className="pdl w90"/><div className="pdl w90 acc"/><div className="pdl w60"/></div></div><div className="p2"><div className="pib"><div className="pibl">DATOS AUTOMÁTICOS</div><div className="pibt">Nombre del negocio, rubro, antigüedad, provincia. Tomados del perfil sin reescribir nada.</div></div><div className="pib"><div className="pibl">CLÁUSULA CLAVE</div><div className="pibt">Se incluye la cláusula de origen Continuam y el fee acordado. Es el respaldo legal del proceso.</div></div></div></div> },
+  { icon: "ti-writing", tone: "blue", h: "Firma electrónica", sub: "Cada parte recibe un link único por email",
+    body: <div><div style={{marginBottom:12}}><div className="perow"><div className="pav" style={{background:"#0e1e36",color:"#85B7EB"}}>JL</div><div style={{flex:1}}><div className="pef">Juan López (cedente)</div><div className="pes">Firmá tu Carta de Intención — Continuam</div></div><span className="peb" style={{background:"#04342C",color:"#5DCAA5",border:"0.5px solid #0F6E56"}}>✓ Firmado</span></div><div className="perow"><div className="pav" style={{background:"#1a2e1a",color:"#97C459"}}>MG</div><div style={{flex:1}}><div className="pef">Martín García (continuador)</div><div className="pes">Firmá tu Carta de Intención — Continuam</div></div><span className="peb" style={{background:"#2a1f0a",color:"#EF9F27",border:"0.5px solid #854F0B"}}>Pendiente</span></div></div><div className="pib"><div className="pibl">QUÉ REGISTRA LA FIRMA</div><div className="pibt">Timestamp, IP, email verificado y token de un solo uso. Válida como firma electrónica simple en Argentina.</div></div></div> },
+  { icon: "ti-lock-open", tone: "teal", h: "Desbloqueo de datos", sub: "Con ambas firmas, se habilita el contacto directo",
+    body: <div><div className="punlock"><i className="ti ti-circle-check"/><p>Carta firmada por ambas partes. Se desbloquearon los datos de contacto y el informe completo del negocio.</p></div><div className="p2"><div className="pib"><div className="pibl">QUÉ SE DESBLOQUEA</div><div className="pibt">Teléfono, email y nombre real del cedente. Informe financiero básico del negocio.</div></div><div className="pib"><div className="pibl">SIN FIRMA</div><div className="pibt">Estos datos permanecen ocultos. La carta firmada es la llave que habilita el proceso.</div></div></div></div> },
+  { icon: "ti-report-money", tone: "teal", h: "Cierre y comisión", sub: "La transferencia se formaliza y Continuam cobra su fee",
+    body: <div><div className="pfee"><div className="pfr"><span className="pfl">Valor del negocio acordado</span><span className="pfv">$40.000 USD</span></div><div className="pfr"><span className="pfl">Fee Continuam (2%)</span><span className="pfv">$800 USD</span></div><div className="pfr"><span className="pftl">Comisión Continuam</span><span className="pftv">$800 USD</span></div></div><div className="pib"><div className="pibl">RESPALDO LEGAL</div><div className="pibt">La Carta firmada establece el origen del match y la obligación de pago. Si hay bypass, existe documentación para reclamar.</div></div></div> }
+];
+
+function ProcessDark() {
+  const [cur, setCur] = useState(0);
+  const labels = ["Registro", "Interés", "Carta", "Firma", "Desbloqueo", "Cierre"];
+  const step = PROC[cur];
+  return (
+    <section id="proceso" style={{ background: "var(--ink)", padding: "100px 0" }}>
+      <style>{`
+        .p2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+        @media(max-width:640px){.p2{grid-template-columns:1fr;}}
+        .pib{background:#1a1d26;border-radius:10px;padding:14px 16px;border:0.5px solid #2a2e3a;}
+        .pibl{font-size:11px;color:#5F5E5A;margin-bottom:5px;letter-spacing:.05em;}
+        .pibt{font-size:13px;color:#B4B2A9;line-height:1.55;}
+        .pacc{background:#0e1e36;border:0.5px solid #1e3a5f;border-radius:10px;padding:14px 16px;}
+        .pdoc{background:#1a1d26;border:0.5px solid #2a2e3a;border-radius:10px;overflow:hidden;margin-bottom:12px;}
+        .pdoch{padding:10px 16px;background:#0e1e36;border-bottom:0.5px solid #1e3a5f;display:flex;align-items:center;gap:8px;}
+        .pdoch span{font-size:12px;color:#85B7EB;font-weight:500;}
+        .pdocb{padding:14px 16px;}
+        .pdl{height:6px;border-radius:3px;background:#2a2e3a;margin-bottom:7px;}
+        .pdl.w80{width:80%;}.pdl.w60{width:60%;}.pdl.w90{width:90%;}
+        .pdl.acc{background:#0e1e36;border:0.5px solid #1e3a5f;}
+        .perow{display:flex;align-items:center;gap:10px;padding:11px 16px;border:0.5px solid #2a2e3a;border-radius:10px;background:#1a1d26;margin-bottom:8px;}
+        .pav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+        .pef{font-size:12px;font-weight:500;color:#D3D1C7;}.pes{font-size:12px;color:#888780;}
+        .peb{font-size:11px;padding:2px 9px;border-radius:30px;white-space:nowrap;}
+        .punlock{display:flex;align-items:center;gap:10px;padding:14px 16px;border:0.5px solid #0F6E56;border-radius:10px;background:#04342C;margin-bottom:12px;}
+        .punlock i{font-size:20px;color:#1D9E75;flex-shrink:0;}.punlock p{font-size:13px;color:#9FE1CB;line-height:1.5;}
+        .pfee{background:#1a1d26;border:0.5px solid #2a2e3a;border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+        .pfr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #2a2e3a;}
+        .pfr:last-child{border-bottom:none;padding-top:9px;}
+        .pfl{font-size:13px;color:#888780;}.pfv{font-size:13px;font-weight:500;color:#D3D1C7;}
+        .pftl{font-size:14px;font-weight:600;color:#f0eeea;}.pftv{font-size:17px;font-weight:600;color:#378ADD;}
+      `}</style>
+      <div className="wrap">
+        <Reveal><SectionTag dark>El proceso</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, color: "#f0eeea", letterSpacing: "-0.02em", marginBottom: 12 }}>De la presentación al <span style={{ fontStyle: "italic", color: "#378ADD" }}>cierre</span></h2></Reveal>
+        <Reveal delay={0.1}><p style={{ fontSize: 16, color: "#888780", maxWidth: 540, marginBottom: 40, lineHeight: 1.7 }}>Un proceso estructurado en 6 pasos para que la transferencia sea ordenada, segura y con respaldo legal para ambas partes.</p></Reveal>
+
+        <Reveal delay={0.15}>
+          <div style={{ display: "flex", alignItems: "flex-start", marginBottom: 32 }}>
+            {labels.map((l, i) => (
+              <div key={i} style={{ flex: i < labels.length - 1 ? 1 : "0 0 auto", minWidth: 0, cursor: "pointer" }} onClick={() => setCur(i)}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <motion.div animate={{
+                    background: i < cur ? "#0F6E56" : i === cur ? "#185FA5" : "#1a1d26",
+                    borderColor: i < cur ? "#1D9E75" : i === cur ? "#378ADD" : "#2a2e3a",
+                    scale: i === cur ? 1.1 : 1
+                  }} transition={{ duration: 0.3, ease }}
+                    style={{ width: 34, height: 34, borderRadius: "50%", border: "0.5px solid", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 600, color: i <= cur ? "#fff" : "#888780", flexShrink: 0 }}>
+                    {i < cur ? "✓" : i + 1}
+                  </motion.div>
+                  {i < labels.length - 1 && (
+                    <div style={{ flex: 1, height: 1, margin: "0 4px", background: "#2a2e3a", position: "relative", overflow: "hidden" }}>
+                      <motion.div animate={{ scaleX: i < cur ? 1 : 0 }} transition={{ duration: 0.4, ease }}
+                        style={{ position: "absolute", inset: 0, background: "#1D9E75", transformOrigin: "left" }} />
+                    </div>
+                  )}
+                </div>
+                <div style={{ fontSize: 11, marginTop: 7, textAlign: "center", color: i === cur ? "#85B7EB" : i < cur ? "#5DCAA5" : "#5F5E5A", paddingRight: i < labels.length - 1 ? 8 : 0 }} className="proc-lbl">{l}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <div style={{ minHeight: 320 }}>
+          <AnimatePresence mode="wait">
+            <motion.div key={cur}
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.4, ease }}
+              style={{ background: "#161920", border: "0.5px solid #2a2e3a", borderRadius: 14, overflow: "hidden" }}>
+              <div style={{ padding: "22px 26px", borderBottom: "0.5px solid #2a2e3a", display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ width: 46, height: 46, borderRadius: 11, background: step.tone === "teal" ? "#04342C" : "#0e1e36", color: step.tone === "teal" ? "#1D9E75" : "#378ADD", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 21 }}>
+                  <i className={"ti " + step.icon} />
+                </div>
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 600, color: "#f0eeea", fontFamily: "var(--fd)" }}>{step.h}</div>
+                  <div style={{ fontSize: 13, color: "#888780" }}>{step.sub}</div>
+                </div>
+              </div>
+              <div style={{ padding: "22px 26px" }}>{step.body}</div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 22 }}>
+          <motion.button whileTap={{ scale: 0.96 }} onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0}
+            style={{ padding: "10px 22px", borderRadius: 10, fontSize: 13, cursor: cur === 0 ? "default" : "pointer", background: "transparent", border: "0.5px solid #2a2e3a", color: "#D3D1C7", opacity: cur === 0 ? 0.3 : 1, fontFamily: "var(--fs)" }}>
+            ← Anterior
+          </motion.button>
+          <span style={{ fontSize: 12, color: "#5F5E5A" }}>Paso {cur + 1} de 6</span>
+          <motion.button whileTap={{ scale: 0.96 }} whileHover={cur < 5 ? { scale: 1.03 } : {}} onClick={() => setCur(c => Math.min(5, c + 1))} disabled={cur === 5}
+            style={{ padding: "10px 22px", borderRadius: 10, fontSize: 13, cursor: cur === 5 ? "default" : "pointer", background: "#185FA5", border: "0.5px solid #378ADD", color: "#fff", opacity: cur === 5 ? 0.4 : 1, fontFamily: "var(--fs)" }}>
+            {cur === 5 ? "Proceso completo ✓" : "Siguiente →"}
+          </motion.button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Register() {
+  const [tab, setTab] = useState("empresa");
+  const empFields = [
+    { l: "Nombre / Razón social", t: "text", ph: "Ej: Ferretería López" },
+    { l: "Rubro", t: "select", opts: ["Gastronomía", "Comercio minorista", "Servicios", "Industria", "Otro"] },
+    { l: "Provincia / Ciudad", t: "text", ph: "Ej: Buenos Aires" },
+    { l: "Años de actividad", t: "number", ph: "Ej: 25" },
+    { l: "Contanos la historia de tu empresa", t: "textarea", ph: "¿Cuándo la fundaste? ¿Qué la hace especial?", full: true },
+    { l: "Email de contacto", t: "email", ph: "nombre@email.com" },
+    { l: "Teléfono (opcional)", t: "tel", ph: "+54 11..." }
+  ];
+  const contFields = [
+    { l: "Tu nombre completo", t: "text", ph: "Ej: Martín García" },
+    { l: "Rubro de interés", t: "select", opts: ["Gastronomía", "Comercio minorista", "Servicios", "Industria", "Cualquiera"] },
+    { l: "Provincia preferida", t: "text", ph: "Ej: Córdoba" },
+    { l: "Experiencia previa", t: "select", opts: ["Sin experiencia en el rubro", "Algo de experiencia", "Soy del rubro"] },
+    { l: "¿Por qué querés continuar un legado?", t: "textarea", ph: "Contanos tu situación y motivación...", full: true },
+    { l: "Email de contacto", t: "email", ph: "nombre@email.com" },
+    { l: "Teléfono (opcional)", t: "tel", ph: "+54 11..." }
+  ];
+  const fields = tab === "empresa" ? empFields : contFields;
+  const inputStyle = { fontSize: 14, padding: "11px 14px", borderRadius: 10, border: "0.5px solid var(--border-2)", background: "var(--bg)", color: "var(--text)", width: "100%", fontFamily: "var(--fs)" };
+  return (
+    <section id="registro" style={{ padding: "100px 0", background: "var(--bg-2)" }}>
+      <div className="wrap" style={{ maxWidth: 780 }}>
+        <Reveal><SectionTag>Sumate</SectionTag></Reveal>
+        <Reveal delay={0.05}><h2 style={{ fontFamily: "var(--fd)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 12 }}>¿Querés ser parte de Continuam?</h2></Reveal>
+        <Reveal delay={0.1}><p style={{ fontSize: 17, color: "var(--text-2)", marginBottom: 32 }}>Completá el formulario según tu perfil. Te contactamos para coordinar los próximos pasos.</p></Reveal>
+        <Reveal delay={0.15}>
+          <div style={{ display: "inline-flex", border: "0.5px solid var(--border-2)", borderRadius: 12, overflow: "hidden", marginBottom: 28, position: "relative", background: "var(--bg)" }}>
+            {["empresa", "continuador"].map(t => (
+              <button key={t} onClick={() => setTab(t)}
+                style={{ padding: "10px 24px", fontSize: 14, cursor: "pointer", border: "none", background: "transparent", color: tab === t ? "#fff" : "var(--text-2)", position: "relative", zIndex: 2, fontFamily: "var(--fs)", fontWeight: 500 }}>
+                {t === "empresa" ? "Tengo una empresa" : "Quiero continuar"}
+              </button>
+            ))}
+            <motion.div layout transition={{ type: "spring", stiffness: 400, damping: 35 }}
+              style={{ position: "absolute", top: 0, bottom: 0, width: "50%", background: "var(--c)", zIndex: 1, left: tab === "empresa" ? 0 : "50%" }} />
+          </div>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <AnimatePresence mode="wait">
+            <motion.div key={tab} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }} transition={{ duration: 0.3, ease }}
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {fields.map((f, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: f.full ? "1 / -1" : "auto" }}>
+                  <label style={{ fontSize: 13, color: "var(--text-2)" }}>{f.l}</label>
+                  {f.t === "textarea" ? <textarea placeholder={f.ph} style={{ ...inputStyle, minHeight: 90, resize: "vertical" }} />
+                    : f.t === "select" ? <select style={inputStyle}>{f.opts.map(o => <option key={o}>{o}</option>)}</select>
+                      : <input type={f.t} placeholder={f.ph} style={inputStyle} />}
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </Reveal>
+        <Reveal delay={0.25}>
+          <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
+            style={{ marginTop: 18, background: "var(--c)", color: "#fff", border: "none", padding: "14px 36px", borderRadius: 12, fontSize: 16, fontWeight: 500, cursor: "pointer", fontFamily: "var(--fs)", boxShadow: "0 10px 30px -8px rgba(24,95,165,0.5)" }}>
+            Enviar información
+          </motion.button>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ padding: "48px 0", background: "var(--bg)", borderTop: "0.5px solid var(--border)" }}>
+      <div className="wrap" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+        <Logo />
+        <p style={{ fontSize: 13, color: "var(--text-3)" }}>continuam.com.ar · Buenos Aires, Argentina</p>
+        <p style={{ fontSize: 13, color: "var(--text-3)" }}>Plataforma de continuidad empresarial</p>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  return <><Nav /><Hero /><Stats /><Audiences /><HowItWorks /><Cases /><Trust /><ProcessDark /><Register /><Footer /></>;
+}
+
+const style = document.createElement("style");
+style.textContent = "@media(max-width:760px){.nav-links a:not(:last-child){display:none;}.proc-lbl{display:none;}}";
+document.head.appendChild(style);
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
-
 </body>
 </html>
